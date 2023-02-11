@@ -5,7 +5,9 @@
 
 
 import yfinance as yf
+from datetime import date, timedelta
 from datetime import datetime
+import time
 
 
 ticker = "ADA-USD"
@@ -25,6 +27,16 @@ interval = "5d"
 # 90m: last 60 days
 # 1h : last 730 days
 # 1d , 5d, 1wk, 1mo, 3mo]
+
+startDate = date(int(start[0:4]) , int(start[5:7]),  int(start[8:10]))
+endDate = date(int(end[0:4]) , int(end[5:7]),  int(end[8:10]))
+
+t = endDate - startDate
+print(t.days)
+
+
+
+
 
 if interval == "1m" :
     pass
