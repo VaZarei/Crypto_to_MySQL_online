@@ -4,8 +4,11 @@
 
 
 
+from ast import Break
+from pydoc import doc
 import yfinance as yf
-from datetime import date, timedelta
+
+from datetime import datetime, date, timedelta
 from datetime import datetime
 import time
 import sqlFunctons
@@ -15,7 +18,7 @@ import sqlFunctons
 
 
 def count_date_Diff (start_Date, end_Date) :
-
+    
    
     if str(type(end_Date))  == "<class 'datetime.datetime'>" :
         end_Date = (str(datetime.now())[0:10])
@@ -23,19 +26,17 @@ def count_date_Diff (start_Date, end_Date) :
 
     startDate = date(int(start_Date[0:4]) , int(start_Date[5:7]),  int(start_Date[8:10]))
     endDate = date(int(end_Date[0:4]) , int(end_Date[5:7]),  int(end_Date[8:10]))
-    
-    countDiff = endDate - startDate     # Count interval days
-    print(countDiff)  # count enddate - start date
-
-    ## mohasebeye boodan dar n rooze akhir :
-
+    intervalDate = endDate - startDate  
     end_Now = end = (str(datetime.now())[0:10])
     end_wanted = date(int(end_Now[0:4]) , int(end_Now[5:7]),  int(end_Now[8:10]))
-    countDiff_last = end_wanted - startDate
+    interval_from_Now = end_wanted - startDate
 
-    print(" Endlast : ", countDiff_last)    # count now_Date - start Day for find last days
+    print("intervalDate: ", intervalDate.days)
+    print("interval_from_Now: ", interval_from_Now.days)
+   
+   
+    return int(intervalDate.days) , int(interval_from_Now.days)  # count enddate - start date  ,  start Day for find last days
 
-    return int(countDiff.days) , int(countDiff_last.days)
 
 
 # Functions -----------------------------------------------------------------------------------------------------------------
@@ -43,14 +44,14 @@ def count_date_Diff (start_Date, end_Date) :
 
 
 ticker = "ADA-USD"
-start_Date = "2023-02-12"
-end_Date = "2023-02-14"
+start_Date = "2023-01-1"  #%Y/%m/%d
+end_Date = "2023-02-10"
 #end_Date = datetime.now()
 interval = "1m"
 
 
 
-# 1m : last 30 days
+# 1m : last 30 days and interval be 7 days or below
 # 2m : last 60 days
 # 5m : last 60 days
 # 15m: last 60 days
@@ -60,29 +61,82 @@ interval = "1m"
 # 1h : last 730 days
 # 1d , 5d, 1wk, 1mo, 3mo]
 
-startDate = date(int(start_Date[0:4]) , int(start_Date[5:7]),  int(start_Date[8:10]))
-endDate = date(int(end_Date[0:4]) , int(end_Date[5:7]),  int(end_Date[8:10]))
- 
-countDiff = endDate - startDate
-print(countDiff)
 
-
-
-
+intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
 
 
 
 if interval == "1m" :
-    print(str(datetime.now())[0:10])
-    dateNow = (str(datetime.now())[0:10])
-    endDate_Now = date(int(dateNow[0:4]) , int(dateNow[5:7]),  int(dateNow[8:10]))
-    
-    diff_date_now = endDate_Now - startDate
-    print(" diff date now :", diff_date_now.days)
-    
 
-    if int(diff_date_now.days) < 30 and int(countDiff.days) < 8 :
-        print(" Output Printable")
+
+    if intervalDate < 31 and interval_from_Now < 8 :
+        print("Countable in 1m")
+    
+    delta = interval_from_Now - 29
+    start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+    print("forced new start date: ", start_Date)
+    intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+    
+    
+    if interval_from_Now > 31 :
+        decide = input(" ---- interval_from_Now > 31 ---- interval between start_date and end_date is more than 30 days, please write start or end for begin count:  ")
+        
+
+
+        
+
+        
+        
+        if decide == "start" :
+            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
+            print("new end date1: ", end_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+         
+
+        if decide == "end" :
+
+            
+            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+            print("new start date: ", start_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+            
+        
+
+    
+    if intervalDate > 8 :
+        
+        decide = input(" ----- intervalDate > 8 ------ interval between start_date and end_date is more than 7 days, please write start or end for begin count:  ")
+        delta = intervalDate - 7
+        
+        if decide == "start" :
+
+            
+            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
+            print("new end date1: ", end_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+        
+            
+            
+         
+
+        if decide == "end" :
+
+            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+            print("new start date:111111 ", start_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+            
+
+    elif intervalDate > 8 :
+        print("elif 22222222222222222222222222")
+        pass
 
     
 
@@ -108,12 +162,7 @@ if interval == "1h" :
     pass
 
 
-a,b= count_date_Diff(start_Date, end_Date)
-print ("a: ", a , "b :", b)
 
-#data = yf.download(ticker, start_Date, end_Date, interval= interval)
+data = yf.download(ticker, start_Date, end_Date, interval=interval)
 
-
-
-#print(data.head(10)) ,
-
+print(data)
