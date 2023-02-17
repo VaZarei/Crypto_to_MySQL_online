@@ -47,7 +47,10 @@ ticker = "ADA-USD"
 start_Date = "2023-01-1"  #%Y/%m/%d
 end_Date = "2023-02-10"
 #end_Date = datetime.now()
-interval = "1m"
+interval = "2m"
+
+print("First :", "start_Date: " , start_Date, "end_Date :", end_Date)
+print("\n\n\n")
 
 
 
@@ -81,11 +84,6 @@ if interval == "1m" :
     if interval_from_Now > 31 :
         decide = input(" ---- interval_from_Now > 31 ---- interval between start_date and end_date is more than 30 days, please write start or end for begin count:  ")
         
-
-
-        
-
-        
         
         if decide == "start" :
             end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
@@ -93,20 +91,15 @@ if interval == "1m" :
 
             intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
             
-         
 
         if decide == "end" :
 
             
             start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
             print("new start date: ", start_Date)
-
             intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
             
-            
-        
 
-    
     if intervalDate > 8 :
         
         decide = input(" ----- intervalDate > 8 ------ interval between start_date and end_date is more than 7 days, please write start or end for begin count:  ")
@@ -120,11 +113,7 @@ if interval == "1m" :
 
             intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
             
-        
-            
-            
-         
-
+   
         if decide == "end" :
 
             start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
@@ -132,16 +121,61 @@ if interval == "1m" :
 
             intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
             
-            
-
-    elif intervalDate > 8 :
-        print("elif 22222222222222222222222222")
-        pass
-
+        
     
 
 if interval == "2m" :
-    pass
+    
+    if intervalDate < 60 and interval_from_Now < 60 :
+        print("Countable in 1m")
+    
+    delta = interval_from_Now - 59
+    start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+    print("forced new start date: ", start_Date)
+    intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+    
+    
+    if interval_from_Now > 60 :
+        decide = input(" ---- interval_from_Now > 31 ---- interval between start_date and end_date is more than 30 days, please write start or end for begin count:  ")
+        
+        
+        if decide == "start" :
+            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
+            print("new end date1: ", end_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+
+        if decide == "end" :
+
+            
+            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+            print("new start date: ", start_Date)
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+
+    if intervalDate > 60 :
+        
+        decide = input(" ----- intervalDate > 8 ------ interval between start_date and end_date is more than 7 days, please write start or end for begin count:  ")
+        delta = intervalDate - 7
+        
+        if decide == "start" :
+
+            
+            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
+            print("new end date1: ", end_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+   
+        if decide == "end" :
+
+            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+            print("new start date:111111 ", start_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+            
+        
 
 if interval == "5m" :
     pass
