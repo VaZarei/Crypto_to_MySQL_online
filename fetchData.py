@@ -46,7 +46,7 @@ def count_date_Diff (start_Date, end_Date) :
 ticker = "ADA-USD"
 start_Date = "2010-01-1"  #%Y/%m/%d 
 end_Date = "2023-02-10"
-end_Date = datetime.now()
+#end_Date = datetime.now()
 intervall = "1m"
 
 if str(type(end_Date))  == "<class 'datetime.datetime'>" :
@@ -98,7 +98,7 @@ if (intervall == "1m") :
             if decide == "start" :
 
                 
-                end_Date = str((datetime.strptime(str(end_Date.date()), '%Y-%m-%d') - timedelta(days=delta)).date())
+                end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
                 print("\n-----------------new End Date: ", end_Date)
 
                 #intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
