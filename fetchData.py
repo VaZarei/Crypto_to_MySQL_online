@@ -44,10 +44,10 @@ def count_date_Diff (start_Date, end_Date) :
 
 
 ticker = "ADA-USD"
-start_Date = "2023-01-1"  #%Y/%m/%d
+start_Date = "2022-01-1"  #%Y/%m/%d
 end_Date = "2023-02-10"
 #end_Date = datetime.now()
-interval = "2m"
+intervall = "m"
 
 print("First :", "start_Date: " , start_Date, "end_Date :", end_Date)
 print("\n\n\n")
@@ -69,7 +69,8 @@ intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
 
 
 
-if interval == "1m" :
+if (intervall == "11m") :
+    print(" im in 1mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
 
 
     if intervalDate < 31 and interval_from_Now < 8 :
@@ -124,10 +125,11 @@ if interval == "1m" :
         
     
 
-if interval == "2m" :
+if (intervall == "21m" or "5m" or "15m" or "30m") :
+    print(" im in 2 ta 30 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
     
     if intervalDate < 60 and interval_from_Now < 60 :
-        print("Countable in 1m")
+        print("Countable in 2m or 5m or 15m or 30m : \n")
     
     delta = interval_from_Now - 59
     start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
@@ -177,26 +179,28 @@ if interval == "2m" :
             
         
 
-if interval == "5m" :
-    pass
 
-if interval == "15m" :
-    pass
-
-if interval == "30m" :
-    pass
-
-if interval == "60m" :
-    pass
-
-if interval == "90m" :
-    pass
-
-if interval == "1h" :
-    pass
+if (intervall == "601m" or "1h") :
+    print(" im in 60 ya 1h mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
 
 
+    if intervalDate < 730 and interval_from_Now < 731 :
+        print("Countable in 60m")
 
-data = yf.download(ticker, start_Date, end_Date, interval=interval)
+    else:
+    
+        delta = interval_from_Now - 729
+        start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+        print("forced new start date: ", start_Date)
+        intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+        
+        
+                        
+
+        
+
+
+
+data = yf.download(ticker, start_Date, end_Date, interval=intervall)
 
 print(data)
