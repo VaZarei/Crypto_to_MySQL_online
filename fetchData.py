@@ -44,10 +44,14 @@ def count_date_Diff (start_Date, end_Date) :
 
 
 ticker = "ADA-USD"
-start_Date = "2022-01-1"  #%Y/%m/%d
+start_Date = "2010-01-1"  #%Y/%m/%d 
 end_Date = "2023-02-10"
-#end_Date = datetime.now()
-intervall = "m"
+end_Date = datetime.now()
+intervall = "1m"
+
+if str(type(end_Date))  == "<class 'datetime.datetime'>" :
+        end_Date = (str(datetime.now())[0:10])
+        print("end_Date = datetime.now")
 
 print("First :", "start_Date: " , start_Date, "end_Date :", end_Date)
 print("\n\n\n")
@@ -69,122 +73,75 @@ intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
 
 
 
-if (intervall == "11m") :
+if (intervall == "1m") :
     print(" im in 1mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+
+
 
 
     if intervalDate < 31 and interval_from_Now < 8 :
         print("Countable in 1m")
     
-    delta = interval_from_Now - 29
-    start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-    print("forced new start date: ", start_Date)
-    intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+    else:
     
-    
-    if interval_from_Now > 31 :
-        decide = input(" ---- interval_from_Now > 31 ---- interval between start_date and end_date is more than 30 days, please write start or end for begin count:  ")
-        
-        
-        if decide == "start" :
-            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
-            print("new end date1: ", end_Date)
-
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-
-        if decide == "end" :
-
-            
-            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-            print("new start date: ", start_Date)
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-
-    if intervalDate > 8 :
-        
-        decide = input(" ----- intervalDate > 8 ------ interval between start_date and end_date is more than 7 days, please write start or end for begin count:  ")
-        delta = intervalDate - 7
-        
-        if decide == "start" :
-
-            
-            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
-            print("new end date1: ", end_Date)
-
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-   
-        if decide == "end" :
-
-            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-            print("new start date:111111 ", start_Date)
-
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-        
+        delta = interval_from_Now - 29
+        start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+        print("forced new start date: ", start_Date)
+        intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
     
 
-if (intervall == "21m" or "5m" or "15m" or "30m") :
+        if intervalDate > 8 :
+            
+            decide = input("intervalDate > 8 ------ interval between start_date and end_date is more than 7 days, please write start or end for begin count:  ")
+            delta = intervalDate - 6
+            
+            if decide == "start" :
+
+                
+                end_Date = str((datetime.strptime(str(end_Date.date()), '%Y-%m-%d') - timedelta(days=delta)).date())
+                print("\n-----------------new End Date: ", end_Date)
+
+                #intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+                
+
+            if decide == "end" :
+
+                start_Date = str((datetime.strptime(str(start_Date), '%Y-%m-%d') + timedelta(days=delta)).date())
+                print("\n------------new Start Date: ", start_Date)
+
+            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+                    
+                
+            
+
+if (intervall == "2m") or (intervall == "5m") or  (intervall == "15m") or (intervall == "30m") :
     print(" im in 2 ta 30 mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+
+
     
-    if intervalDate < 60 and interval_from_Now < 60 :
+    if interval_from_Now < 60 :
         print("Countable in 2m or 5m or 15m or 30m : \n")
+
+    else:
+
     
-    delta = interval_from_Now - 59
-    start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-    print("forced new start date: ", start_Date)
-    intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-    
-    
-    if interval_from_Now > 60 :
-        decide = input(" ---- interval_from_Now > 31 ---- interval between start_date and end_date is more than 30 days, please write start or end for begin count:  ")
+        delta = interval_from_Now - 59
+        start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+        print("forced new start date: ", start_Date)
+        intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
         
         
-        if decide == "start" :
-            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
-            print("new end date1: ", end_Date)
-
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-
-        if decide == "end" :
-
-            
-            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-            print("new start date: ", start_Date)
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-
-    if intervalDate > 60 :
-        
-        decide = input(" ----- intervalDate > 8 ------ interval between start_date and end_date is more than 7 days, please write start or end for begin count:  ")
-        delta = intervalDate - 7
-        
-        if decide == "start" :
-
-            
-            end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
-            print("new end date1: ", end_Date)
-
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
-   
-        if decide == "end" :
-
-            start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-            print("new start date:111111 ", start_Date)
-
-            intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-            
         
 
+        
+            
 
-if (intervall == "601m" or "1h") :
+
+if (intervall == "60m") or (intervall == "1h"):
     print(" im in 60 ya 1h mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
 
 
-    if intervalDate < 730 and interval_from_Now < 731 :
+    if interval_from_Now < 729 :
         print("Countable in 60m")
 
     else:
