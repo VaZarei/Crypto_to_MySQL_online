@@ -43,11 +43,11 @@ def count_date_Diff (start_Date, end_Date) :
 
 
 
-ticker = "ADA-USD"
+ticker = "BTC-USD"
 start_Date = "2010-01-1"  #%Y/%m/%d 
 end_Date = "2023-02-10"
 #end_Date = datetime.now()
-intervall = "1m"
+intervall = "60m"   # 1m # 2m # 5m # 15m # 30m # 60m # 1h # 1d , 5d, 1wk, 1mo, 3mo
 
 if str(type(end_Date))  == "<class 'datetime.datetime'>" :
         end_Date = (str(datetime.now())[0:10])
@@ -56,17 +56,6 @@ if str(type(end_Date))  == "<class 'datetime.datetime'>" :
 print("First :", "start_Date: " , start_Date, "end_Date :", end_Date)
 print("\n\n\n")
 
-
-
-# 1m : last 30 days and interval be 7 days or below
-# 2m : last 60 days
-# 5m : last 60 days
-# 15m: last 60 days
-# 30m: last 60 days
-# 60m: last 730 days
-# 90m: last 60 days
-# 1h : last 730 days
-# 1d , 5d, 1wk, 1mo, 3mo]
 
 
 intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
