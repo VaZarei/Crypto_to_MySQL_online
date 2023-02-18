@@ -8,119 +8,124 @@ from sqlFunctons import *
 
 
 
-
-ticker = "BTC-USD"
-start_Date = "2010-01-01"  #%Y/%m/%d 
-end_Date = "2023-02-10"
-end_Date = datetime.now()
-intervall = "15m"   # 1m # 2m # 5m # 15m # 30m # 60m # 1h # 1d , 5d, 1wk, 1mo, 3mo
-
-if str(type(end_Date))  == "<class 'datetime.datetime'>" :
-        end_Date = (str(datetime.now())[0:10])
-        print("---------- > End_Date = datetime.now \n\n")
-
-print("\n\n\nStart_Date : " , start_Date, "\nEnd_Date   : ", end_Date, "\n\n")
-intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
-
-
-if (intervall == "1m") :
-    
-    if intervalDate < 31 and interval_from_Now < 8 :
-
-        print("\nStart_Date        : ", start_Date)
-        print("End_Date          : ", end_Date)
-        print("interval          : ", intervall ,"\n\n")
-
-        data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-        print(data)
-    
-    else:
-    
-        delta = interval_from_Now - 29
-        start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-        print("\n -------------- > Forced new start date: ", start_Date)
-        print(" -------------- >            end   date: ", end_Date , "\n")
-        intervalDate, interval_from_Now = (count_date_Diff(str(start_Date), end_Date))
+def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
     
 
-        if intervalDate > 8 :
+    if str(type(strEnd_Date))  == "<class 'datetime.datetime'>" :
+            strEnd_Date = (str(datetime.now())[0:10])
+            print("---------- > End_Date = datetime.now \n\n")
+
+    print("\n\n\nStart_Date : " , strStart_Date, "\nEnd_Date   : ", strEnd_Date, "\n\n")
+    intervalDate, interval_from_Now = (count_date_Diff(str(strStart_Date), strEnd_Date))
+
+
+    if (strInterval == "1m") :
+        
+        if intervalDate < 31 and interval_from_Now < 8 :
+
+            print("\nStart_Date        : ", strStart_Date)
+            print("End_Date          : ", strEnd_Date)
+            print("interval          : ", strInterval ,"\n\n")
+
+            data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
             
-            decide = input("\n\"intervalDate > 8\"\nInterval between Start_Date and End_Date is more than 7 days, please choose constant:(start/end) : ")
-            delta = intervalDate - 6
-            
-            if decide == "start" :
+        
+        else:
+        
+            delta = interval_from_Now - 29
+            strStart_Date = str((datetime.strptime(strStart_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+            print("\n -------------- > Forced new start date: ", strStart_Date)
+            print(" -------------- >            end   date: ", strEnd_Date , "\n")
+            intervalDate, interval_from_Now = (count_date_Diff(str(strStart_Date), strEnd_Date))
+        
 
-                end_Date = str((datetime.strptime(end_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
+            if intervalDate > 8 :
                 
-                print("\nStart_Date        : ", start_Date)
-                print("End_Date          : ", end_Date)
-                print("interval          : ", intervall ,"\n\n")
+                decide = input("\n\"intervalDate > 8\"\nInterval between Start_Date and End_Date is more than 7 days, please choose constant:(start/end) : ")
+                delta = intervalDate - 6
+                
+                if decide == "start" :
 
-                data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-                print(data)
+                    strEnd_Date = str((datetime.strptime(strEnd_Date, '%Y-%m-%d') - timedelta(days=delta)).date())
+                    
+                    print("\nStart_Date        : ", strStart_Date)
+                    print("End_Date          : ", strEnd_Date)
+                    print("interval          : ", strInterval ,"\n\n")
 
-            if decide == "end" :
+                    data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
+                    
 
-                start_Date = str((datetime.strptime(str(start_Date), '%Y-%m-%d') + timedelta(days=delta)).date())
+                if decide == "end" :
 
-                print("\nStart_Date        : ", start_Date)
-                print("End_Date          : ", end_Date)
-                print("interval          : ", intervall ,"\n\n")
+                    strStart_Date = str((datetime.strptime(str(strStart_Date), '%Y-%m-%d') + timedelta(days=delta)).date())
 
-                data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-                print(data)
+                    print("\nStart_Date        : ", strStart_Date)
+                    print("End_Date          : ", strEnd_Date)
+                    print("interval          : ", strInterval ,"\n\n")
 
-            
+                    data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
                     
 
 
-if (intervall == "2m") or (intervall == "5m") or  (intervall == "15m") or (intervall == "30m") :
-    
-    if interval_from_Now < 60 :
+    if (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") :
         
-        print("\nStart_Date        : ", start_Date)
-        print("End_Date          : ", end_Date)
-        print("interval          : ", intervall ,"\n\n")
+        if interval_from_Now < 60 :
+            
+            print("\nStart_Date        : ", strStart_Date)
+            print("End_Date          : ", strEnd_Date)
+            print("interval          : ", strInterval ,"\n\n")
 
-        data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-        print(data)
+            data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
+            print(data)
 
-    else:
-    
-        delta = interval_from_Now - 59
-        start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+        else:
+        
+            delta = interval_from_Now - 59
+            strStart_Date = str((datetime.strptime(strStart_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
 
-        print("\nStart_Date        : ", start_Date)
-        print("End_Date          : ", end_Date)
-        print("interval          : ", intervall ,"\n\n")
+            print("\nStart_Date        : ", strStart_Date)
+            print("End_Date          : ", strEnd_Date)
+            print("interval          : ", strInterval ,"\n\n")
 
-        data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-        print(data)
+            data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
+            print(data)
+            
+            
+
+    if (strInterval == "60m") or (strInterval == "1h"):
+
+        if interval_from_Now < 729 :
+            
+            print("\nStart_Date        : ", strStart_Date)
+            print("End_Date          : ", strEnd_Date)
+            print("interval          : ", strInterval ,"\n\n")
+
+            data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
+            
+
+        else:
+        
+            delta = interval_from_Now - 729
+            strStart_Date = str((datetime.strptime(strStart_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
+
+            print("\nStart_Date        : ", strStart_Date)
+            print("End_Date          : ", strEnd_Date)
+            print("interval          : ", strInterval ,"\n\n")
+
+            data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
+            
+            
+
+    if (strInterval == "1d") or (strInterval == "5d")or (strInterval == "1wk")or (strInterval == "1mo")or (strInterval == "3mo"):
         
         
+            print("\nStart_Date        : ", strStart_Date)
+            print("End_Date          : ", strEnd_Date)
+            print("interval          : ", strInterval ,"\n\n")
 
-if (intervall == "60m") or (intervall == "1h"):
+            data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
 
-    if interval_from_Now < 729 :
+            
+
+    return data            
         
-        print("\nStart_Date        : ", start_Date)
-        print("End_Date          : ", end_Date)
-        print("interval          : ", intervall ,"\n\n")
-
-        data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-        print(data)
-
-    else:
-    
-        delta = interval_from_Now - 729
-        start_Date = str((datetime.strptime(start_Date, '%Y-%m-%d') + timedelta(days=delta)).date())
-
-        print("\nStart_Date        : ", start_Date)
-        print("End_Date          : ", end_Date)
-        print("interval          : ", intervall ,"\n\n")
-
-        data = yf.download(ticker, start_Date, end_Date, interval=intervall)
-        print(data)
-        
-
-
