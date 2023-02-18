@@ -1,15 +1,40 @@
-# pip install yfinance
-
 import yfinance as yf
+import datetime
+
+from datetime import date
 from datetime import datetime, date, timedelta
 from datetime import datetime
 
-from sqlFunctons import *
+
+
+
+def count_date_Diff (start_Date, end_Date) :
+    
+   
+    if str(type(end_Date))  == "<class 'datetime.datetime'>" :
+        end_Date = (str(datetime.now())[0:10])
+        print("yess")
+
+    startDate = date(int(start_Date[0:4]) , int(start_Date[5:7]),  int(start_Date[8:10]))
+    endDate = date(int(end_Date[0:4]) , int(end_Date[5:7]),  int(end_Date[8:10]))
+    intervalDate = endDate - startDate  
+    end_Now = end = (str(datetime.now())[0:10])
+    end_wanted = date(int(end_Now[0:4]) , int(end_Now[5:7]),  int(end_Now[8:10]))
+    interval_from_Now = end_wanted - startDate
+
+    print("intervalDate      : ", intervalDate.days)
+    print("interval_from_Now : ", interval_from_Now.days)
+   
+   
+    return int(intervalDate.days) , int(interval_from_Now.days)  # count enddate - start date  ,  start Day for find last days
+
+
 
 
 
 def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
     
+    checkin = False
 
     if str(type(strEnd_Date))  == "<class 'datetime.datetime'>" :
             strEnd_Date = (str(datetime.now())[0:10])
@@ -67,7 +92,7 @@ def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
                     
 
 
-    if (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") :
+    elif (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") :
         
         if interval_from_Now < 60 :
             
@@ -92,7 +117,7 @@ def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
             
             
 
-    if (strInterval == "60m") or (strInterval == "1h"):
+    elif (strInterval == "60m") or (strInterval == "1h"):
 
         if interval_from_Now < 729 :
             
@@ -116,7 +141,7 @@ def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
             
             
 
-    if (strInterval == "1d") or (strInterval == "5d")or (strInterval == "1wk")or (strInterval == "1mo")or (strInterval == "3mo"):
+    elif (strInterval == "1d") or (strInterval == "5d")or (strInterval == "1wk")or (strInterval == "1mo")or (strInterval == "3mo"):
         
         
             print("\nStart_Date        : ", strStart_Date)
@@ -126,6 +151,10 @@ def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
             data = yf.download(strTicker, strStart_Date, strEnd_Date, interval=strInterval)
 
             
+    else:
+        
+        checkin = True
+    
 
-    return data            
+    return data if checkin == False else print("\nData is Empty because interval is incorrect !!!!!!! \n") # or None
         
