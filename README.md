@@ -6,6 +6,7 @@ It's a project about dynamic fetch crypto data from yfinance in specific period 
 Tag , Version : a.b.c   ---> Python . mySQL . GoogleSheet
 
 
+
 Files information:
 
 1- MainCode.py             :  Main Function to run all
