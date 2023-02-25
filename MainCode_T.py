@@ -2,6 +2,7 @@
 import time
 import zeroKey
 import mysql.connector
+ 
 
 from Fetch_YF_Functons import *
 
@@ -21,33 +22,34 @@ intervalArray = ["1m", "2m", "5m", "15m", "30m", "60m", "1h", "1d", "5d", "1wk",
 
 
 
-
-
-mydb = mysql.connector.connect(
+conn = mysql.connector.connect(
   host=zeroKey.mySqlConf.get("host") ,
   user=zeroKey.mySqlConf.get("user"),
   password=zeroKey.mySqlConf.get("pass")
 )
 
-print(mydb)
 
 
-mycursor = mydb.cursor()
+mycursor = conn.cursor()
 
 query1 = """
-             Create DATABASE bottrader ;
+             Create DATABASE IF NOT EXISTS bottrader  ;
+             use bottrader;
+             
 
              
              """
 
 query2 = """
-             drop database bottrader ;
+             drop database IF EXISTS bottrader ;
              
 
              """
 
-for result in mycursor.execute(query2 , multi=True) :
+for result in mycursor.execute(query1 , multi=True) :
+    pass
     print(result)
 
 
 print("OK")
+
