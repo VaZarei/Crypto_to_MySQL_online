@@ -1,8 +1,8 @@
 mySqlConf = {
 
     "host" : "localhost",
-    "user" : "admin" ,
-    "pass" : "admin@123" 
+    "user" : "admin1" ,
+    "pass" : "admin123" 
 
 }
 
