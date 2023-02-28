@@ -17,7 +17,7 @@ end_Date = "2023-02-10"
 interval = "2m"   # 1m # 2m # 5m # 15m # 30m # 60m # 1h # 1d , 5d, 1wk, 1mo, 3m
 intervalArray = ["1m", "2m", "5m", "15m", "30m", "60m", "1h", "1d", "5d", "1wk", "1mo", "3mo", "okok"]
 
-#data = fetch_DataF(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=interval)
+data = fetch_DataF(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=interval)
 #print(data)
 
 
@@ -27,6 +27,10 @@ conn = mysql.connector.connect(
   user=zeroKey.mySqlConf.get("user"),
   password=zeroKey.mySqlConf.get("pass")
 )
+if conn :
+    print("Connection to mySql is Ok")
+else :
+    print("Connection to mySql is fail")
 
 
 
