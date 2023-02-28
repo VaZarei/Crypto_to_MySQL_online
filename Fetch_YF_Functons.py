@@ -167,4 +167,4 @@ def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
         checkin = True
     
 
-    return data if checkin == False else -1
+    return data if checkin == False else (print("\n\n\n....> Fetch Data failed because ticker or interval are incorrect !\n\n\n\n"))
