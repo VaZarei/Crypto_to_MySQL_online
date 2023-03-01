@@ -6,20 +6,22 @@ import pandas as pd
 import mysql.connector
  
 from sqlalchemy import create_engine, text
-
-from sqlalchemy import insert
-
-
 from Fetch_YF_Functons import *
-from mainView import *
+from datetime import datetime
 
 
 
-ticker            = initialVar.ticker 
-start_Date        = initialVar.start_Date 
-end_Date          = initialVar.end_Date
-interval          = initialVar.interval
-intervalArray     = initialVar.interval
+ticker     =  "ada-usd"  # lower case
+start_Date =  "2023-01-01"  #%Y/%m/%d 
+#end_Date  =  "2023-02-10"
+end_Date   =  datetime.now()
+interval   =  "1d"  # ["1m", "2m", "5m", "15m", "30m", "60m", "1h", "1d", "5d", "1wk", "1mo", "3mo"] 
+    
+            
+
+
+   
+
 
 database_username = zeroKey.mySqlConf.get("user")
 database_password = zeroKey.mySqlConf.get("pass")
@@ -68,7 +70,7 @@ mydb.commit()
 # Create or insert  to table 
 
 mycursor = mydb.cursor()
-query = "INSERT INTO adausd_1d (Date, Volume) VALUES (%s , %s)"
+query = "INSERT INTO adausd_1d (Date, Volume) VALUES (%s , %s)"   # Edit on 1d timeframe
 val = ["2024-01-01" , "254789"]
 mycursor.execute(query, val)
 mydb.commit()
