@@ -2,14 +2,14 @@
 
 It's a project about dynamic fetch crypto data from yfinance in specific period to mysql , pull crypto data from mysql and edit them.</br>
 
-in future :
+in future :</br>
 
 1- I will edit codes to become in MVC structure . (Model, View, Control)</br>
-2- I will send fetch data to google sheet and sync them online .</br>
+2- I will send fetch data to google sheet and sync them online .</br></br>
 
 
 
-Files information:</br></br>
+Files information:</br>
 
 1- MainCode.py             :  Main Function to run all</br>
 2- Fetch_YF_Functons.py    :  All Function to fetch cryptodata from yahoo finance</br>
