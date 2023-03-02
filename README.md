@@ -16,7 +16,7 @@ Files information:</br>
 3- TestCode.ipynb          :  for test slice code ...</br>
 4- queryOnsql.sql          :  Need to write in mysql befor run MainCode.py</br>
 5- zeroKey.py              :  All 3part software such as mySql, google sheet, ... Config in this file , need config before run MainCode.py</br>
-6- backup                  :  its a spare folder for keep data out of github</br></br></br></br>
+6- backup                  :  its a spare folder for keep data out of github</br></br>
 
 
 
