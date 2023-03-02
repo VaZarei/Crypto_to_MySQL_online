@@ -1,4 +1,4 @@
-# Crypto_MySQL
+# Crypto_PullandPush_to_Mysql_and_Edit
 
 It's a project about dynamic fetch crypto data from yfinance in specific period to mysql , pull crypto data from mysql and edit them.
 in future :
