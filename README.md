@@ -3,8 +3,8 @@
 It's a project about dynamic fetch crypto data from yfinance in specific period to mysql , pull crypto data from mysql and edit them.
 in future :
 
-1- I will edit codes to become in MVC structure . (Model, View, Control)
-2- I will send fetch data to google sheet and sync them online .
+1- I will edit codes to become in MVC structure . (Model, View, Control)</br>
+2- I will send fetch data to google sheet and sync them online .</br>
 
 
 
