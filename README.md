@@ -1,6 +1,6 @@
 # Crypto_to_MySQL_offline
 
-It's a project about dynamic fetch crypto data from yfinance in specific period to mysql , pull crypto data from mysql and edit them.</br>
+It's a project about dynamic fetch crypto data from yfinance in specific period in past until now to mysql , pull crypto data from mysql and edit them.</br>
 
 in future :</br>
 
