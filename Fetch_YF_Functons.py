@@ -187,7 +187,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
     checkin = False
 
     if str(type(strEnd_Date))  == "<class 'datetime.datetime'>" :
-            strEnd_Date = (str(datetime.now())[0:10])
+            #strEnd_Date = (str(datetime.now())[0:10])
             print("---------- > End_Date = datetime.now \n\n")
 
     print("\n\n\nStart_Date : " , strStart_Date, "\nEnd_Date   : ", strEnd_Date, "\n\n")
@@ -309,40 +309,42 @@ def interval_Online ( intMaxLen , strInterval) :
         
         cal = math.ceil(2*intMaxLen*1/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        print("strStart_Date : " , strStart_Date)
+        strEnd_Date     =  datetime.now()
+        
 
     
     if strInterval == "2m" :
 
         cal = math.ceil(2*intMaxLen*2/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
     
     if strInterval == "5m" :
         
         cal = math.ceil(2*intMaxLen*5/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
     
     if strInterval == "15m" :
 
         cal = math.ceil(2*intMaxLen*15/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
     if strInterval == "30m" :
 
         cal = math.ceil(2*intMaxLen*30/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
     
     if strInterval == "1h" :
 
         cal = math.ceil(2*intMaxLen*60/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
         
 
 
@@ -350,14 +352,14 @@ def interval_Online ( intMaxLen , strInterval) :
 
         cal = math.ceil(2*intMaxLen*90/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
 
     if strInterval == "4h" :
 
         cal = math.ceil(2*intMaxLen*240/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
 
     if strInterval == "1d" :
@@ -365,7 +367,7 @@ def interval_Online ( intMaxLen , strInterval) :
         cal = math.ceil(2*intMaxLen*1440/1440)
         print(cal, intMaxLen)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
 
     
@@ -374,30 +376,30 @@ def interval_Online ( intMaxLen , strInterval) :
 
         cal = math.ceil(2*intMaxLen*7200/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
             
     if strInterval == "1wk" :
 
         cal = math.ceil(2*intMaxLen*10080/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
     
 
     if strInterval == "1mo" :
         
         cal = math.ceil(2*intMaxLen*44640/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
 
     if strInterval == "3mo" :
         
         cal = math.ceil(2*intMaxLen*133920/1440)
         strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
-        strEnd_Date     =  (str(datetime.now())[0:10])
+        
 
     #start_date , end_date, cal =interval_Online(1440, "1m")
     #print("\nstart_date : ",start_date, "\nend_date   : ",end_date,  "\ncal        : ",cal )"""
 
-    return (strStart_Date, strEnd_Date, cal)
+    return (strStart_Date, cal)
 

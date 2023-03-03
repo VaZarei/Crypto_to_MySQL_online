@@ -76,12 +76,12 @@ if backTestInput == "yes" :
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
         
-        start_Date = str((datetime.now() - timedelta(days=intMaxLen)).date())
+        
         end_Date     =  datetime.now()
         
-        for i in intervalA : #range(1) :
+        for i in intervalA :
                 print(i)
-                start_Date, end_Date, cal = interval_Online(intMaxLen, i)
+                start_Date, cal = interval_Online(intMaxLen, i)
                 
                 data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
                 print("data : " , data)
