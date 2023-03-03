@@ -1,5 +1,6 @@
 import yfinance as yf
 import datetime
+import math 
 
 from datetime import date
 from datetime import datetime, date, timedelta
@@ -258,7 +259,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
             
             
 
-    elif (strInterval == "60m") or (strInterval == "1h"):
+    elif (strInterval == "60m") or (strInterval == "1h") or (strInterval == "90m"):
 
         if interval_from_Now < 729 :
             
@@ -301,44 +302,102 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
 
 
 def interval_Online ( intMaxLen , strInterval) :
+
+    """ this function calculate start and end date per intMaxLen (maximom period of rsi or ...) base strInterval (1m , 2m , ... )"""
     
     if strInterval == "1m" :
-
-        strStart_Date = str((datetime.now() - timedelta(days=1)).date())
-        strEnd_Date     =  datetime.now()
-
-        pass
+        
+        cal = math.ceil(2*intMaxLen*1/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
 
     
     if strInterval == "2m" :
-        pass
+
+        cal = math.ceil(2*intMaxLen*2/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
 
     
     if strInterval == "5m" :
-        pass
+        
+        cal = math.ceil(2*intMaxLen*5/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
 
     
     if strInterval == "15m" :
-        pass
 
+        cal = math.ceil(2*intMaxLen*15/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+
+    if strInterval == "30m" :
+
+        cal = math.ceil(2*intMaxLen*30/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
     
     if strInterval == "1h" :
-        pass
 
-    
+        cal = math.ceil(2*intMaxLen*60/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+        
+
+
+    if strInterval == "90m" :
+
+        cal = math.ceil(2*intMaxLen*90/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+
+
+    if strInterval == "4h" :
+
+        cal = math.ceil(2*intMaxLen*240/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+
+
     if strInterval == "1d" :
-        pass
+
+        cal = math.ceil(2*intMaxLen*1440/1440)
+        print(cal, intMaxLen)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+
 
     
-    if strInterval == "1m" :
-        pass
 
-    
-    if strInterval == "1m" :
-        pass
+    if strInterval == "5d" :
 
+        cal = math.ceil(2*intMaxLen*7200/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+            
+    if strInterval == "1wk" :
+
+        cal = math.ceil(2*intMaxLen*10080/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
     
-    if strInterval == "1m" :
-        pass
-    
-    return strStart_Date, strEnd_Date
+
+    if strInterval == "1mo" :
+        
+        cal = math.ceil(2*intMaxLen*44640/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+
+
+    if strInterval == "3mo" :
+        
+        cal = math.ceil(2*intMaxLen*133920/1440)
+        strStart_Date = str((datetime.now() - timedelta(days = cal)).date())
+        strEnd_Date     =  (str(datetime.now())[0:10])
+
+    #start_date , end_date, cal =interval_Online(1440, "1m")
+    #print("\nstart_date : ",start_date, "\nend_date   : ",end_date,  "\ncal        : ",cal )"""
+
+    return (strStart_Date, strEnd_Date, cal)
+
