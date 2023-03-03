@@ -13,15 +13,19 @@ from datetime import datetime
 
 # ------------------------------------------------ --------------------------------------------- ------------------------------------------- ---------------------------
 
-ticker     =  "ada-usd"  # lower case
-start_Date =  "2023-01-01"  #%Y/%m/%d 
-#end_Date  =  "2023-02-10"
-end_Date   =  datetime.now()
-interval   =  "1d"  # ["1m", "2m", "5m", "15m", "30m", "60m", "1h", "1d", "5d", "1wk", "1mo", "3mo"] 
+ticker       =  "ada-usd"  # lower case
+start_Date   =  "2023-01-02"  #%Y/%m/%d 
 
+#end_Date     =  "2023-02-10"
+end_Date     =  datetime.now()
+interval     =  "5m"  # ["1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h", "1d", "5d", "1wk", "1mo", "3mo"] 
+intervalA    =  ["1m", "2m", "5m", "15m", "30m", "1h", "90m", "1d", "5d", "1wk", "1mo", "3mo"] 
+intMaxLen = 28
 
 # ------------------------------------------------ --------------------------------------------- ------------------------------------------- ---------------------------    
-            
+backTestInput = "no"  # " no"
+onlineFire    = "yes"
+           
 
 
 
@@ -35,18 +39,16 @@ mydb = mysql.connector.connect(
 )
 
 
-backTestInput = "yes"  # " no"
-onlineFire    = "no"
 
 if backTestInput == "yes" :
        
 
         data = fetch_DataF(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=interval)
-
+        
         table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= interval)
         frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
 
-
+     
 
 
 
@@ -73,9 +75,20 @@ if backTestInput == "yes" :
 
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
-   ticker = yf.Ticker(ticker).info
+        
+        start_Date = str((datetime.now() - timedelta(days=intMaxLen)).date())
+        end_Date     =  datetime.now()
+        
+        for i in intervalA : #range(1) :
+                print(i)
+                
+                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
+                print("data : " , data)
+                table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace') 
 
-   print (ticker)
+  
+
 
 
     
