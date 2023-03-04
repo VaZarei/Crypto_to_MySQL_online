@@ -234,7 +234,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
                     
 
 
-    elif (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") :
+    elif (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") or (strInterval == "90m") :
         
         if interval_from_Now < 60 :
             
@@ -259,7 +259,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
             
             
 
-    elif (strInterval == "60m") or (strInterval == "1h") or (strInterval == "90m"):
+    elif (strInterval == "60m") or (strInterval == "1h") :
 
         if interval_from_Now < 729 :
             

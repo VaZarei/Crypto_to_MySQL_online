@@ -1,5 +1,6 @@
 import yfinance as yf
 import pandas as pd
+
 from zeroKey import * 
 from datetime import datetime
 import sqlalchemy
@@ -21,8 +22,14 @@ intMaxLen = 14
 def yfinann():
     datam = yf.download(ticker, start=start_Date, end=end_Date , interval="1m")
     print(datam)
+    
+    if (datam.empty) :
+        print("True")
+    else:
+        print("False") 
+    #print(datam.iloc[0]["Open"])
 
-#yfinann()
+yfinann()
 def cal_online_Price ():
 
     intervalA    =  ["1m", "2m", "5m", "15m", "30m", "1h", "90m",  "1d", "5d", "1wk", "1mo", "3mo"] 
@@ -71,4 +78,4 @@ def cal_online_Price ():
 
 
 
-cal_online_Price()
+#cal_online_Price()

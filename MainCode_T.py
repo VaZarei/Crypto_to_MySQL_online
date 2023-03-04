@@ -4,6 +4,7 @@ from zeroKey import *
 import sqlalchemy
 import pandas as pd
 import mysql.connector
+import time
 
  
 from sqlalchemy import create_engine, text
@@ -14,12 +15,12 @@ from datetime import datetime
 # ------------------------------------------------ --------------------------------------------- ------------------------------------------- ---------------------------
 
 ticker       =  "ada-usd"  # lower case
-start_Date   =  "2023-01-02"  #%Y/%m/%d 
+start_Date   =  "2015-01-02"  #%Y/%m/%d 
 
 #end_Date     =  "2023-02-10"
 end_Date     =  datetime.now()
 interval     =  "5m"  # ["1m", "2m", "5m", "15m", "30m", "60m", "90m", "1h", "1d", "5d", "1wk", "1mo", "3mo"] 
-intervalA    =  ["1m", "2m", "5m", "15m", "30m", "1h", "90m",  "1d", "5d", "1wk", "1mo", "3mo"] 
+intervalA    =  ["1m", "2m", "5m", "15m", "30m", "60m", "90m",  "1d", "5d", "1wk", "1mo", "3mo"] 
 intMaxLen = 14
 
 # ------------------------------------------------ --------------------------------------------- ------------------------------------------- ---------------------------    
@@ -76,23 +77,51 @@ if backTestInput == "yes" :
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
         
+        #intervalA = ["90m"]
         
-        end_Date     =  datetime.now()
+        end_Date     =  str((datetime.now() + timedelta(days=1)).date())
+        print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>/////   Date Time Now : ", end_Date)
         
+        
+
+        data_online = {}
+
         for i in intervalA :
                 print(i)
-                start_Date, cal = interval_Online(intMaxLen, i)
+              
                 
-                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
-                print("data : " , data)
-                table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
-                frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace') 
+                _checkEmpty = 0
+                print("loop Time :", i)
 
+                try :
+                     while _checkEmpty < 10 :
+                                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
+                                if data.empty:
+                                        _checkEmpty +=1
+                                        print( "Data is Empty.I'm Tring again... ({_checkEmpty}/10)".format(_checkEmpty))
+                                else:
+                                         _checkEmpty=10
+                                         print("data.empty: ", data.empty)
+
+                                        
+                     data_online[i] = data
+                     table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                     frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+
+                     
+                except :
+                       print(">>>>>>>>>>>>>>>  may be internet connection is failed because download is faild")
+                
+                time.sleep(1)
   
+        
+        print(data_online["60m"])
+        #print(data)
 
+        #print(data_online.values())
+        #print(data_online.keys())
 
-
-    
+        
 
 
 
