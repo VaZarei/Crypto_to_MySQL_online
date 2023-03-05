@@ -6,6 +6,8 @@ from datetime import datetime
 import sqlalchemy
 from sqlalchemy import create_engine, text
 import mysql.connector
+import time
+from Fetch_YF_Functons import *
 
 
 ticker       =  "ada-usd"  # lower case
@@ -27,55 +29,65 @@ def yfinann():
         print("True")
     else:
         print("False") 
-    #print(datam.iloc[0]["Open"])
+   
 
-yfinann()
-def cal_online_Price ():
-
-    intervalA    =  ["1m", "2m", "5m", "15m", "30m", "1h", "90m",  "1d", "5d", "1wk", "1mo", "3mo"] 
-
-    for i in intervalA :
-
-        if i == "1m" :
-            
-
-            yfF = yf.download(ticker, period="1d", interval= i)
-            print("yfDF : \n")
-            #print(yfF)
-            
-
-            table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
-            #print(table_name)
-            query1 = text("select * from {table_name} where Date > '2023-02-03 12:45:00' ; ".format(table_name=table_name))     
-            query1 = text("select * from {table_name}  ; ".format(table_name=table_name))     
-            sqlDF = pd.read_sql(query1, database_connection().connect())
-            #print("sqlDF : \n", sqlDf)
+#yfinann()
 
 
-            yfDF = pd.DataFrame(yfF)
-            yfDF.reset_index(inplace=True)
-            
-            selectYf = yfDF.tail(5).loc[: , "Datetime"]
+        
+def updateData() :
+        
+        end_Date     =  str((datetime.now() + timedelta(days=1)).date())
+        print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>/////   Date Time Now : ", end_Date)
+        
+        
 
-            for yfIteme in selectYf :
+        data_online = {}
 
+        for i in intervalA :
                 
-                print(str(yfIteme)[0:19])
+                
+                _checkEmpty = True
+                errorCounter = 1
+             
 
-            
-            
-            
-            print("\nsqlDF  :\n")
-            selectSql = sqlDF.tail(5).loc[:, "Datetime"]
+                try :
+                     
+                     data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)         
+                     data_online[i] = data
+                     table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                     frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+                     
+                     print("Try for fetch and push  in interval : " ,i , " ---------- > OK!\n")
+              
 
-            for sqlItem in selectSql :
-                print(sqlItem)
+                     
+                except :
+                        
+                       print("\n>>>>>>>>>>>>>>>  May be internet connection is failed because download is failed !\n")
+                       while _checkEmpty :
+                                errorCounter +=1
 
+                                print("\nErrorCounter :", errorCounter)
 
-          
+                                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
+                                if data.empty:
+                                       
+                                        time.sleep(3)
+                                        print( "\nData is Empty.I'm Tring again... ")
+                                else:
+                                         _checkEmpty= False
+                                         data_online[i] = data
+                                         table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                                         frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+                                         print("Data.Empty: ", data.empty)
+                
+                                         time.sleep(1)
+  
+        
+                                print(" Test ::::::::::::::::::::")
 
+        return data_online
 
-
-
-
-#cal_online_Price()
+updateData()
+       

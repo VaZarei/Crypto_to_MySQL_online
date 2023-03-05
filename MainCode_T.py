@@ -76,62 +76,13 @@ if backTestInput == "yes" :
 
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
-        
-        #intervalA = ["90m"]
-        
-        end_Date     =  str((datetime.now() + timedelta(days=1)).date())
-        print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>/////   Date Time Now : ", end_Date)
-        
-        
 
-        data_online = {}
+        data_online = updateData(intervalA, ticker, start_Date)
 
-        for i in intervalA :
-                
-                
-                _checkEmpty = True
-                errorCounter = 1
-             
-
-                try :
-                     
-                     data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)         
-                     data_online[i] = data
-                     table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
-                     frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
-                     
-                     print("Try for fetch and push  in interval : " ,i , " ---------- > OK!\n")
-              
-
-                     
-                except :
-                       print("\n>>>>>>>>>>>>>>>  may be internet connection is failed because download is failed !\n")
-                       while _checkEmpty :
-                                errorCounter +=1
-
-                                print("\nErrorCounter :", errorCounter)
-
-                                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
-                                if data.empty:
-                                       
-                                        time.sleep(3)
-                                        print( "\nData is Empty.I'm Tring again... ")
-                                else:
-                                         _checkEmpty= False
-                                         data_online[i] = data
-                                         table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
-                                         frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
-                                         print("Data.Empty: ", data.empty)
-                
-                time.sleep(1)
-  
-        
-        print(" Test ::::::::::::::::::::")
-        print(data_online["60m"])
-        #print(data)
-
-        #print(data_online.values())
         #print(data_online.keys())
+        #print(data_online["1m"])
+
+
 
         
 
