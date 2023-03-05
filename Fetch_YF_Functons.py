@@ -1,10 +1,12 @@
 import yfinance as yf
 import datetime
 import math 
+import time
 
 from datetime import date
 from datetime import datetime, date, timedelta
 from datetime import datetime
+from zeroKey import *
 
 
 
@@ -33,9 +35,6 @@ def count_date_Diff (start_Date, end_Date) :
    
    
     return int(intervalDate.days) , int(interval_from_Now.days)  # count enddate - start date  ,  start Day for find last days
-
-
-
 
 
 def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
@@ -171,11 +170,6 @@ def fetch_DataF(strTicker, strStart_Date, strEnd_Date, strInterval) :
     return data if checkin == False else (print("\n\n\n....> Fetch Data failed because ticker or interval are incorrect !\n\n\n\n"))
 
 
-
-
-
-
-
 def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
 
     """
@@ -234,7 +228,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
                     
 
 
-    elif (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") :
+    elif (strInterval == "2m") or (strInterval == "5m") or  (strInterval == "15m") or (strInterval == "30m") or (strInterval == "90m") :
         
         if interval_from_Now < 60 :
             
@@ -259,7 +253,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
             
             
 
-    elif (strInterval == "60m") or (strInterval == "1h") or (strInterval == "90m"):
+    elif (strInterval == "60m") or (strInterval == "1h") :
 
         if interval_from_Now < 729 :
             
@@ -403,3 +397,63 @@ def interval_Online ( intMaxLen , strInterval) :
 
     return (strStart_Date, cal)
 
+        #print(data)
+
+
+def updateData(intervalA, ticker, start_Date) :
+        intervalA, ticker, 
+        
+        end_Date     =  str((datetime.now() + timedelta(days=1)).date())
+        print(" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>/////   Date Time Now : ", end_Date)
+        
+        
+
+        data_online = {}
+
+        for i in intervalA :
+                
+                
+                _checkEmpty = True
+                errorCounter = 1
+             
+
+                try :
+                     
+                     data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)         
+                     data_online[i] = data
+                     table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                     frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+                     
+                     print("Try for fetch and push  in interval : " ,i , " ---------- > OK!\n")
+              
+
+                     
+                except :
+                        
+                       print("\n>>>>>>>>>>>>>>>  May be internet connection is failed because download is failed !\n")
+                       while _checkEmpty :
+                                errorCounter +=1
+
+                                print("\nErrorCounter :", errorCounter)
+
+                                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
+                                if data.empty:
+                                       
+                                        time.sleep(3)
+                                        print( "\nData is Empty.I'm Tring again... ")
+                                else:
+                                         _checkEmpty= False
+                                         data_online[i] = data
+                                         table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                                         frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+                                         print("Data.Empty: ", data.empty)
+                
+                                         time.sleep(1)
+  
+        
+                                
+
+        return data_online
+
+
+       
