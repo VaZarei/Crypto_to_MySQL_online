@@ -87,34 +87,46 @@ if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         data_online = {}
 
         for i in intervalA :
-                print(i)
-              
                 
-                _checkEmpty = 0
-                print("loop Time :", i)
+                
+                _checkEmpty = True
+                errorCounter = 1
+             
 
                 try :
-                     while _checkEmpty < 10 :
-                                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
-                                if data.empty:
-                                        _checkEmpty +=1
-                                        print( "Data is Empty.I'm Tring again... ({_checkEmpty}/10)".format(_checkEmpty))
-                                else:
-                                         _checkEmpty=10
-                                         print("data.empty: ", data.empty)
-
-                                        
+                     
+                     data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)         
                      data_online[i] = data
                      table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
                      frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+                     
+                     print("Try for fetch and push  in interval : " ,i , " ---------- > OK!\n")
+              
 
                      
                 except :
-                       print(">>>>>>>>>>>>>>>  may be internet connection is failed because download is faild")
+                       print("\n>>>>>>>>>>>>>>>  may be internet connection is failed because download is failed !\n")
+                       while _checkEmpty :
+                                errorCounter +=1
+
+                                print("\nErrorCounter :", errorCounter)
+
+                                data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
+                                if data.empty:
+                                       
+                                        time.sleep(3)
+                                        print( "\nData is Empty.I'm Tring again... ")
+                                else:
+                                         _checkEmpty= False
+                                         data_online[i] = data
+                                         table_name="{ticker}_{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+                                         frame = data.to_sql(con= database_connection() , name=table_name , if_exists='replace')
+                                         print("Data.Empty: ", data.empty)
                 
                 time.sleep(1)
   
         
+        print(" Test ::::::::::::::::::::")
         print(data_online["60m"])
         #print(data)
 
