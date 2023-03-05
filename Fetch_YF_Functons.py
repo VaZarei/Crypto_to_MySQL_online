@@ -456,4 +456,17 @@ def updateData(intervalA, ticker, start_Date) :
         return data_online
 
 
-       
+def data_processF (intervalA ,data_online : dict):
+    
+    data_process_dict = {}
+
+    for i in intervalA :
+         data_process_dict[i]= sum(data_online["1m"]["Open"])
+         print("-----------------------------------------------")
+         print(data_process_dict["1m"])
+
+
+
+
+
+    pass      

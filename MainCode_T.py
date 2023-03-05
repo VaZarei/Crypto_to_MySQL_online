@@ -86,7 +86,7 @@ if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         t=sum(data_online["1m"]["Open"])
         print("t :" ,t)
 
-
+        data_processF(["1m"], data_online)
         
 
 
