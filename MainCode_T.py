@@ -4,6 +4,7 @@ from zeroKey import *
 import sqlalchemy
 import pandas as pd
 import mysql.connector
+import talib
 import time
 import math
  
