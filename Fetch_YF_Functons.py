@@ -2,6 +2,7 @@ import yfinance as yf
 import datetime
 import math 
 import time
+import talib
 
 from datetime import date
 from datetime import datetime, date, timedelta
@@ -461,12 +462,16 @@ def data_processF (intervalA ,data_online : dict):
     data_process_dict = {}
 
     for i in intervalA :
-         data_process_dict[i]= sum(data_online["1m"]["Open"])
+         
+         data_process_dict["sum"]  = [i], sum(data_online[i]["Open"])
+         data_process_dict["RSI"]  = [i], talib.RSI(data_online[i]["Open"])
+         
          print("-----------------------------------------------")
-         print(data_process_dict["1m"])
+        
 
+    #print(data_process_dict.keys())
+    #print(data_process_dict)
 
+    return data_process_dict
 
-
-
-    pass      
+          

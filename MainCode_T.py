@@ -14,6 +14,8 @@ from datetime import datetime
 
 
 # ------------------------------------------------ --------------------------------------------- ------------------------------------------- ---------------------------
+print("pip freeze > requirements.txt")
+# ------------------------------------------------ --------------------------------------------- ------------------------------------------- ---------------------------
 
 ticker       =  "ada-usd"  # lower case
 start_Date   =  "2015-01-02"  #%Y/%m/%d 
@@ -77,18 +79,18 @@ if backTestInput == "yes" :
 
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
+        intervalA = ["5m"]
 
-        data_online = updateData(["1m"], ticker, start_Date)
+        data_online = updateData(intervalA, ticker, start_Date)
 
-        #print(data_online.keys())
-        #print(data_online["1m"])
+        data_process_dict = data_processF (intervalA, data_online)
 
-        
-        t=sum(data_online["1m"]["Open"])
-        print("t :" ,t)
-
-        data_processF(["1m"], data_online)
-        
+        for i in intervalA :
+                if str(list(data_process_dict.values())[0][0]) == '5m' :
 
 
+                        print("yess")
+                        print (data_process_dict[""][i])
+     
+                print(list(data_process_dict.values())[0][0])
 
