@@ -3,6 +3,7 @@ import datetime
 import math 
 import time
 import talib
+import mysql.connector
 
 from datetime import date
 from datetime import datetime, date, timedelta
@@ -10,7 +11,14 @@ from datetime import datetime
 from zeroKey import *
 
 
+mydb = mysql.connector.connect(
+    
+  host= mySqlConf("host"),
+  user= mySqlConf("user"),
+  password= mySqlConf("pass"),
+  database=mySqlConf("database_name")
 
+)
 
 def count_date_Diff (start_Date, end_Date) :
 
@@ -293,7 +301,7 @@ def fetch_DataF_O(strTicker, strStart_Date, strEnd_Date, strInterval) :
         checkin = True
     
 
-    return data if checkin == False else (print("\n\n\n....> Fetch Data failed because ticker or interval are incorrect !\n\n\n\n"))
+    return data.reset_index() if checkin == False else (print("\n\n\n....> Fetch Data failed because ticker or interval are incorrect !\n\n\n\n"))
 
 
 def interval_Online ( intMaxLen , strInterval) :
@@ -438,6 +446,7 @@ def updateData(intervalA, ticker, start_Date) :
                                 print("\nErrorCounter :", errorCounter)
 
                                 data = fetch_DataF_O(strTicker=ticker, strStart_Date=start_Date, strEnd_Date=end_Date, strInterval=i)
+                                
                                 if data.empty:
                                        
                                         time.sleep(3)
@@ -457,16 +466,33 @@ def updateData(intervalA, ticker, start_Date) :
         return data_online
 
 
-def data_processF (intervalA ,data_online : dict):
+def data_processF (intervalA ,data_online : dict, ticker) :
     
     data_process_dict = {}
 
     for i in intervalA :
          
-         data_process_dict["sum"]  = [i], sum(data_online[i]["Open"])
-         data_process_dict["RSI"]  = [i], talib.RSI(data_online[i]["Open"])
+        
+        table_name="{ticker}_{interval}_P".format(ticker= ticker.replace("-","") ,interval= i)
+        mycursor = mydb.cursor()
+        query = """
+                create table IF NOT EXISTS {table_name}({Date} varchar(50));
+                                                         
+                
+                                                        
+
+                  
+                """.format(table_name = table_name, Date = data_online[i].columns[0] )
+        print("Query >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> : \n", query)
+        #val = ["2024-01-01" , "254789"]
+        mycursor.execute(query)
+        mydb.commit()
+
+        table_name="{ticker}_'P_'{interval}".format(ticker= ticker.replace("-","") ,interval= i)
+        data_process_dict["sum"]  = [i, sum(data_online[i]["Open"])]
+        data_process_dict["RSI"]  = [i, talib.RSI(data_online[i]["Open"])]
          
-         print("-----------------------------------------------")
+        print("-----------------------------------------------")
         
 
     #print(data_process_dict.keys())

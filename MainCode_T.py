@@ -79,18 +79,12 @@ if backTestInput == "yes" :
 
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
-        intervalA = ["5m"]
+        intervalA = ["5m", "15m"]
 
         data_online = updateData(intervalA, ticker, start_Date)
 
-        data_process_dict = data_processF (intervalA, data_online)
-
-        for i in intervalA :
-                if str(list(data_process_dict.values())[0][0]) == '5m' :
 
 
-                        print("yess")
-                        print (data_process_dict[""][i])
-     
-                print(list(data_process_dict.values())[0][0])
+
+print("Data_Online : >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n", data_online)
 
