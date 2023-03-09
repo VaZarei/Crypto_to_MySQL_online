@@ -11,6 +11,8 @@ from zeroKey import *
 
 
 a = {"sum":["1m", ["A","B", "C","D"]] , "RSI":["1m", ["A","B", "C","D"]]}
+
+
 """
 print(a)
 print(a["sum"])

@@ -79,12 +79,18 @@ if backTestInput == "yes" :
 
 if onlineFire == "yes" :             # --------- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     
+
+
+
         intervalA = ["5m", "15m"]
 
         data_online = updateData(intervalA, ticker, start_Date)
+ 
 
 
 
+print("\n\nData_Online : >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n", data_online)
 
-print("Data_Online : >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n", data_online)
-
+print("\n\nSleeping for 4 minutes and fetch online again ...!! ")
+time.sleep(240)
+print("\n\nWake up and fetch Online !!!\n\n")
